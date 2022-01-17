@@ -31,30 +31,25 @@ export function update (): void {
 
     //w4x.cls(4)
 
-    w4x.color(2,3)
+    w4x.SetColor(2,3)
     //w4.text("Hello World!", 50, 50)
 
-w4x.cls(2)
+    w4x.ClearBackground(2)
 
-    w4x.rect(30, 10, 10, 10, 1, 1)
-    w4x.color(2, 2)
-    w4x.rect(50, 10, 10, 10, 2, 2)
-    w4x.color(3, 3)
-    w4x.rect(70, 10, 10, 10, 3, 3)
-    w4x.color(4, 4)
-    w4x.rect(90, 10, 10, 10, 4, 4)
+    w4x.DrawRectangle(30, 10, 10, 10, 1, 1)
+    w4x.DrawRectangle(50, 10, 10, 10, 2, 2)
+    w4x.DrawRectangle(70, 10, 10, 10, 3, 3)
+    w4x.DrawRectangle(90, 10, 10, 10, 4, 4)
 
-    w4x.circ(100, 100, 20, 3, 2)
+    w4x.DrawCircle(100, 100, 20, 3, 2)
 
-    if (w4x.btn(w4.BUTTON_LEFT)) {
-        w4x.rect(20, 20, 40, 40, 3)
+    if (w4x.IsGamepadButtonDown(w4.BUTTON_LEFT)) {
+        w4x.DrawRectangle(20, 20, 40, 40, 3)
     }
 
-    if (w4x.mousebtnp(w4.MOUSE_LEFT)) {
-        randomNum = w4x.random(10, 100)
+    if (w4x.IsMouseButtonPressed(w4.MOUSE_LEFT)) {
+        randomNum = w4x.GetRandomValue(10, 100)
     }
 
-    w4x.text("Random Num: " + randomNum.toString(), 10, 100, 3)
-
-
+    w4x.DrawText("Random Num: " + randomNum.toString(), 10, 100, 3)
 }
