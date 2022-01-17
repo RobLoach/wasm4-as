@@ -1,0 +1,14 @@
+{
+  "name": "wasm4-wordle2",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "asc --target release",
+    "build:debug": "asc --target debug",
+    "start": "w4 watch",
+    "test": "npm run build"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.19.22",
+    "w4": "^0.0.16"
+  }
+}
