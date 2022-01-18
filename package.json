@@ -1,14 +1,18 @@
 {
-  "name": "wasm4-wordle2",
+  "name": "wasm4-utils",
   "version": "1.0.0",
+  "main": "src/wasm4x",
   "scripts": {
-    "build": "asc --target release",
+    "build": "asc --target release -Osize",
     "build:debug": "asc --target debug",
     "start": "w4 watch",
-    "test": "npm run build"
+    "test": "npm run build",
+    "bundle": "w4 bundle build/cart.wasm --title \"Game\" --windows build/\"$npm_package_name\"-windows.exe --mac build/\"$npm_package_name\"-mac --linux build/\"$npm_package_name\"-linux --html build/\"$npm_package_name\".html",
+    "prebundle": "npm run build",
+    "clean": "rm -rf build"
   },
   "devDependencies": {
     "assemblyscript": "^0.19.22",
-    "w4": "^0.0.16"
+    "wasm4": "^2.2.0"
   }
 }

@@ -1,55 +1,28 @@
 import * as w4 from "./wasm4"
-import * as w4x from "./wasm4x"
-//import * as words from "./words"
 
-let randomNum:i32 = 0;
+import { SetColor, SetPalette, ClearBackground, SCREEN_SIZE, DrawLine, DrawPixel, DrawHorizontalLine, DrawVerticalLine, DrawEllipse, DrawRectangle, DrawText, DrawCircle, IsGamepadButtonDown, IsGamepadButtonPressed, IsMouseButtonDown, IsMouseButtonPressed, GetMouseX, GetMouseY, GetRandomValue, SaveStorageValue, LoadStorageValue } from "./wasm4-utils"
 
 export function start() : void {
-    w4.trace("DFSAADFASD")
-    //env.seed()
-
+    w4.trace("Running.")
 }
 
 export function update (): void {
-    Math.random()
+    ClearBackground(3)
 
-    //w4x.palette(209486, 9279918, 15672124, 15658734);
-    store<u16>(w4.DRAW_COLORS, 2)
-    //w4.text("Hello from\nAssemblyScript!", 10, 10)
+    DrawRectangle(0, 0, SCREEN_SIZE / 2, SCREEN_SIZE / 2, 1, 1)
+    DrawRectangle(SCREEN_SIZE / 2, 0, SCREEN_SIZE / 2, SCREEN_SIZE / 2, 2, 2)
+    DrawRectangle(0, SCREEN_SIZE / 2, SCREEN_SIZE / 2, SCREEN_SIZE / 2, 3, 3)
+    DrawRectangle(SCREEN_SIZE / 2, SCREEN_SIZE / 2, SCREEN_SIZE / 2, SCREEN_SIZE / 2, 4, 4)
 
-    const gamepad = load<u8>(w4.GAMEPAD1)
-    if (gamepad & w4.BUTTON_1) {
-        store<u16>(w4.DRAW_COLORS, 4)
+    DrawCircle(10, 20, 10, 3, 2)
+    DrawEllipse(40, 20, 10, 5, 3, 2)
+    DrawLine(80, 120, 50, 80, 2)
+
+    DrawText("Hello World!!", SCREEN_SIZE / 2, SCREEN_SIZE / 2, 4, 2, 1, 1)
+
+    DrawPixel(GetMouseX(), GetMouseY(), 2)
+
+    if (IsMouseButtonDown(w4.MOUSE_LEFT)) {
+        DrawText("Random Number: " + GetRandomValue(0, 100).toString(), 0, SCREEN_SIZE, 1, 0, 0, 2)
     }
-
-    let num = 3
-
-    w4.text("Press X to blink " + num.toString(), 16, 90)
-
-    
-    //w4.text(words.words[4], 20, 20)
-
-    //w4x.cls(4)
-
-    w4x.SetColor(2,3)
-    //w4.text("Hello World!", 50, 50)
-
-    w4x.ClearBackground(2)
-
-    w4x.DrawRectangle(30, 10, 10, 10, 1, 1)
-    w4x.DrawRectangle(50, 10, 10, 10, 2, 2)
-    w4x.DrawRectangle(70, 10, 10, 10, 3, 3)
-    w4x.DrawRectangle(90, 10, 10, 10, 4, 4)
-
-    w4x.DrawCircle(100, 100, 20, 3, 2)
-
-    if (w4x.IsGamepadButtonDown(w4.BUTTON_LEFT)) {
-        w4x.DrawRectangle(20, 20, 40, 40, 3)
-    }
-
-    if (w4x.IsMouseButtonPressed(w4.MOUSE_LEFT)) {
-        randomNum = w4x.GetRandomValue(10, 100)
-    }
-
-    w4x.DrawText("Random Num: " + randomNum.toString(), 10, 100, 3)
 }

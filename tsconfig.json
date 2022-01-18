@@ -1,6 +1,7 @@
 {
   "extends": "assemblyscript/std/assembly.json",
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "wasm4-utils.ts"
   ]
 }
