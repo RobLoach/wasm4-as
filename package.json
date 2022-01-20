@@ -1,7 +1,7 @@
 {
-  "name": "wasm4-utils",
-  "version": "1.0.0",
-  "main": "src/wasm4x",
+  "name": "wasm4-as",
+  "version": "0.0.1",
+  "main": "src/wasm4",
   "scripts": {
     "build": "asc --target release -Osize",
     "build:debug": "asc --target debug",

@@ -1,44 +1,54 @@
-# WASM-4 Utils
+# WASM-4 AssemblyScript Extras
 
-Utility functions for WASM-4 AssemblyScript to ease development.
+WASM-4 AssemblyScript Extras (*wasm4-as*) is a drop-in replacement to WASM-4's default API to ease development and make using WASM-4 feel more at home.
+
+## Features
+
+- Set the palette using hex strings
+- Rapidly change drawing colors directly through the drawing methods
+- Input API to check if buttons were pressed once
+- Write to persistent memory like an integer array
+- Save having to reference API memory addresses directly
 
 ## API
 
 The API is highly inspired by raylib, Borland BGI and XNA, aiming to be easy to read and understand.
 
-``` ts
-SetColor(color1, color2, color3, color4)
-SetPalette(color1, color2, color3, color4)
-ClearBackground(color)
-DrawLine(x1, y1, x2, y2, color)
-DrawPixel(x, y, color)
-DrawHorizontalLine(x, y, length, color)
-DrawVerticalLine(x, y, length, color)
-DrawEllipse(x, y, radiusH, radiusV, color, fill)
-DrawRectangle(x, y, width, height, color, fill)
-DrawText(text, x, y, color, background, horizontalAlign, verticalAlign)
-DrawCircle(x, y, radius, color, fill)
-IsGamepadButtonDown(button, player)
-IsGamepadButtonPressed(button, player)
-IsMouseButtonDown(button, player)
-IsMouseButtonPressed(button, player)
-GetMouseX()
-GetMouseY()
-GetRandomValue(min, max)
-SaveStorageValue(position, value)
-LoadStorageValue(position)
+``` js
+color([color1], [color2], [color3], [color4])
+palette(color1, color2, color3, color4)
+cls([color])
+line(x1, y1, x2, y2, [color])
+pixel(x, y, [color])
+hline(x, y, length, [color])
+vline(x, y, length, [color])
+ellipse(x, y, radiusH, radiusV, [color], [fill])
+rect(x, y, width, height, [color], [fill])
+text(text, x, y, [color], [background], [horizontalAlign], [verticalAlign])
+circ(x, y, radius, [color], [fill])
+btn(button, [player])
+btnp(button, [player])
+mouse(button)
+mousep(button)
+mousex()
+mousey()
+rand(min, max)
+diskw(position, value)
+diskr(position)
 ```
 
 ## Usage
 
-1. Copy wasm4-utils.ts to your src directory.
-2. Import all the methods by using the following:
+1. Replace your project's `wasm4.ts` this [wasm4.ts](src/wasm4.ts)
+2. Import all the methods by using either of the following:
     ``` js
-    import { SetColor, SetPalette, ClearBackground, DrawLine, DrawPixel, DrawHorizontalLine, DrawVerticalLine, DrawEllipse, DrawRectangle, DrawText, DrawCircle, IsGamepadButtonDown, IsGamepadButtonPressed, IsMouseButtonDown, IsMouseButtonPressed, GetMouseX, GetMouseY, GetRandomValue } from "./wasm4-utils"
-    ```
+    // WASM-4
+    import * as w4 from "./wasm4"
 
-3. Update the path below to your own local "./wasm4".
+    // WASM-4
+    import { color, palette, cls, line, pixel, hline, vline, ellipse, oval, rect, text, textWidth, textHeight, circ, btn, btnp, mouse, mousep, mousex, mousey, rand, diskw, diskr } from "./wasm4"
+    ```
 
 ## License
 
-*wasm4-utils* is licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
+*wasm4-as* is licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
