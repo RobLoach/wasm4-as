@@ -4,7 +4,7 @@
 *
 *   DEPENDENCIES:
 *       - WASM-4 https://wasm4.org
-* 
+*
 *   USAGE:
 *       1. Replace your project's wasm4.ts with this one in your src directory.
 *
@@ -46,6 +46,9 @@
 // │                                                                           │
 // └───────────────────────────────────────────────────────────────────────────┘
 
+/**
+ * Both the width and height of the screen.
+ */
 export const SCREEN_SIZE: u32 = 160;
 
 // ┌───────────────────────────────────────────────────────────────────────────┐
@@ -269,40 +272,71 @@ export function line(x1:i32, y1:i32, x2:i32, y2:i32, col:u16 = 1) :void {
     }
 }
 
-export function hline(x1:i32, y1:i32, length:i32, col:u16 = 1) :void {
+/**
+ * Draw a horizontal line.
+ */
+export function hline(x:i32, y:i32, length:i32, col:u16 = 1) :void {
     color(col)
-    w4hline(x1, y1, length)
+    w4hline(x, y, length)
 }
 
-export function vline(x1:i32, y1:i32, length:i32, col:u16 = 1) :void {
+/**
+ * Draw a vertical line.
+ */
+export function vline(x:i32, y:i32, length:i32, col:u16 = 1) :void {
     color(col)
-    w4vline(x1, y1, length)
+    w4vline(x, y, length)
 }
 
+/**
+ * Draw a pixel on the screen.
+ */
 export function pixel(x:i32, y:i32, col:u16 = 1) :void {
     color(col)
     w4hline(x, y, 1)
 }
 
+/**
+ * Draw an ellipse on the screen.
+ */
 export function ellipse(centerX:i32, centerY:i32, radiusH:i32, radiusV:i32, outline:u16 = 1, fill:u16 = 0) :void {
     color(fill, outline)
     w4oval(centerX - radiusH, centerY - radiusV, radiusH * 2, radiusV * 2)
 }
 
+/**
+ * Draw an oval on the screen.
+ */
 export function oval(x:i32, y:i32, width:i32, height:i32, outline:u16 = 1, fill:u16 = 0) :void {
     color(fill, outline)
     w4oval(x, y, width, height)
 }
 
+/**
+ * Draw a rectangle on the screen.
+ *
+ * @param x The X coordinate of the top left corner of the rectangle.
+ * @param y The Y coordinate of the top left corner of the rectangle.
+ * @param width The width of the rectangle in pixels.
+ * @param height The height of the rectangle in pixels.
+ * @param outline The border color of the rectangle. Use 0 to not have an outline color.
+ * @param fill The fill color for the rectangle. Use 0 to not have a fill color.
+ */
 export function rect(x:i32, y:i32, width:i32, height:i32, outline:u16 = 1, fill:u16 = 0) :void {
     color(fill, outline)
     w4rect(x, y, width, height)
 }
 
+/**
+ * Get the width of the given text based on WASM-4's default font size.
+ */
 export function textWidth(str:string) :i32 {
     return str.length * 8
 }
 
+/**
+ * Get the height of the given text based on WASM-4's default font size.
+ */
 export function textHeight(str:string) :i32 {
     return str.split('\n').length * 8
 }
@@ -315,7 +349,7 @@ export function textHeight(str:string) :i32 {
  */
 export function text(text:string, x:i32, y:i32, col:u16 = 1, background:u16 = 0, horizontalAlign:u8 = 0, verticalAlign:u8 = 0) :void {
     color(col, background)
-    
+
     // TODO: Support newlines in DrawText alignment
     switch (horizontalAlign) {
         case 1:
@@ -338,16 +372,32 @@ export function text(text:string, x:i32, y:i32, col:u16 = 1, background:u16 = 0,
     w4text(text, x, y)
 }
 
-export function circ(x:i32, y:i32, radius:i32, outline:u16 = 1, fill:u16 = 0) :void {
+/**
+ * Draws a circle on the screen.
+ *
+ * @param centerX The X coordinate of the center of the circle.
+ * @param centerY The Y coordinate of the center of the circle.
+ * @param radius The radius of the circle in pixels.
+ * @param outline The border color of the circle. Use 0 to not have a border.
+ * @param fill The fill color of the circle. Use 0 to not have a fill color.
+ */
+export function circ(centerX:i32, centerY:i32, radius:i32, outline:u16 = 1, fill:u16 = 0) :void {
     color(fill, outline)
-    w4oval(x - radius, y - radius, radius * 2, radius * 2)
+    w4oval(centerX - radius, centerY - radius, radius * 2, radius * 2)
 }
 
+/**
+ * Determines whether the given button is currently pressed down.
+ */
 export function btn(button:u8, player:i32 = 0) :bool {
     return (load<u8>(GAMEPAD1 + player) & button) as bool
 }
 
 let btnPreviousState = new Array<u8>(4)
+
+/**
+ * Determine if the given button was pressed on this frame.
+ */
 export function bntp(button:u8, player:i32 = 0) :bool {
     let gamepad:u8 = load<u8>(GAMEPAD1 + player)
     let pressedThisFrame:u8 = gamepad & (gamepad ^ btnPreviousState[player])
@@ -355,11 +405,18 @@ export function bntp(button:u8, player:i32 = 0) :bool {
     return (pressedThisFrame & button) as bool
 }
 
+/**
+ * Determine if the given mouse button is currently pressed down.
+ */
 export function mouse(button:u8) :bool {
     return (load<u8>(MOUSE_BUTTONS) & button) as bool
 }
 
 let mousebtnPreviousState:u8
+
+/**
+ * Determine if the given mouse button was pressed on this frame.
+ */
 export function mousep(button:u8) :bool {
     let buttons:u8 = load<u8>(MOUSE_BUTTONS)
     let pressedThisFrame = buttons & (buttons ^ mousebtnPreviousState)
